@@ -1,46 +1,49 @@
 pipeline {
-    agent { dockerfile true }
-    environment { 
+    ws("/home/sardor/Documents/LEARNING/JenkinsSpotEC2/JenkinsWorkspace") {
 
-        BUILD = 'true'
-        TEST = 'false'
-        DELIVER = 'true'
+        agent { dockerfile true }
+        environment { 
 
-        PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
+            BUILD = 'true'
+            TEST = 'false'
+            DELIVER = 'true'
 
-    }
-    stages {
-        stage('Build'){
-            when {environment name: 'DELIVER', value: 'true'}  
-            //agent { dockerfile true }
-            steps {
-                sh 'yarn install --production'
-            }
+            PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
+
         }
-        stage('Deliver'){
-            when {environment name: 'DELIVER', value: 'true'}  
-            
-            steps {
-                // sh script:'''
-                //     sudo rm -rf /var/www/html/
-                //     sudo mkdir /var/www/html/
-                //     git clone ec2-user@${Build_Slave_IP}:/home/ec2-user/workspace/TestProjectWithSlaves/dist --config core.sshCommand="ssh -i /home/ec2-user/ec2-test.pem -o StrictHostKeyChecking=no"
-                //     sudo cp -R ./dist/AngularWithJenkins/* /var/www/html/
-                //     sudo rm -rf dist
-                    
-                //     sudo service httpd start
-                //     echo 'Now start the apache server on your EC2: $ sudo service httpd start'
-                //     echo 'Visit http://<PUBLIC IP>/ to see your application in action.'
-                // '''
-                sh 'node --version'
-                sh 'pwd'
-                sh script:'''
-                    node src/index.js
-                '''
-                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
-                sh 'echo "Terminating..."'
-                //sh 'sudo service httpd stop'
+        stages {
+            stage('Build'){
+                when {environment name: 'DELIVER', value: 'true'}  
+                //agent { dockerfile true }
+                steps {
+                    sh 'yarn install --production'
+                }
+            }
+            stage('Deliver'){
+                when {environment name: 'DELIVER', value: 'true'}  
 
+                steps {
+                    // sh script:'''
+                    //     sudo rm -rf /var/www/html/
+                    //     sudo mkdir /var/www/html/
+                    //     git clone ec2-user@${Build_Slave_IP}:/home/ec2-user/workspace/TestProjectWithSlaves/dist --config core.sshCommand="ssh -i /home/ec2-user/ec2-test.pem -o StrictHostKeyChecking=no"
+                    //     sudo cp -R ./dist/AngularWithJenkins/* /var/www/html/
+                    //     sudo rm -rf dist
+
+                    //     sudo service httpd start
+                    //     echo 'Now start the apache server on your EC2: $ sudo service httpd start'
+                    //     echo 'Visit http://<PUBLIC IP>/ to see your application in action.'
+                    // '''
+                    sh 'node --version'
+                    sh 'pwd'
+                    sh script:'''
+                        node src/index.js
+                    '''
+                    input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                    sh 'echo "Terminating..."'
+                    //sh 'sudo service httpd stop'
+
+                }
             }
         }
     }
