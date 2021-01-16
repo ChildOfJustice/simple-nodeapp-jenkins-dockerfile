@@ -26,7 +26,8 @@ pipeline {
                 //     echo 'Now start the apache server on your EC2: $ sudo service httpd start'
                 //     echo 'Visit http://<PUBLIC IP>/ to see your application in action.'
                 // '''
-
+                sh 'node --version'
+                sh 'pwd'
                 // sh script:'''
                 //     node src/index.js
                 // '''
