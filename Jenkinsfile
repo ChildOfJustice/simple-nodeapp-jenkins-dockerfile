@@ -1,8 +1,8 @@
 pipeline {
-    agent none
+    agent { dockerfile true }
     environment { 
 
-        BUILD = 'false'
+        BUILD = 'true'
         TEST = 'false'
         DELIVER = 'true'
 
@@ -10,10 +10,15 @@ pipeline {
 
     }
     stages {
-        
+        stage('Build'){
+            when {environment name: 'DELIVER', value: 'true'}  
+            //agent { dockerfile true }
+            steps {
+                sh 'yarn install --production'
+            }
         stage('Deliver'){
             when {environment name: 'DELIVER', value: 'true'}  
-            agent { dockerfile true }
+            
             steps {
                 // sh script:'''
                 //     sudo rm -rf /var/www/html/
