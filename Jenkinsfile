@@ -34,9 +34,9 @@ pipeline {
                 // '''
                 sh 'node --version'
                 sh 'pwd'
-                // sh script:'''
-                //     node src/index.js
-                // '''
+                sh script:'''
+                    node src/index.js
+                '''
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh 'echo "Terminating..."'
                 //sh 'sudo service httpd stop'
