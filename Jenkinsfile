@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh 'yarn install --production'
             }
+        }
         stage('Deliver'){
             when {environment name: 'DELIVER', value: 'true'}  
             
