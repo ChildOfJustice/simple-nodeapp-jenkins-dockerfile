@@ -4,13 +4,23 @@ pipeline {
     //agent { dockerfile true }
     environment { 
 
-        BUILD = 'true'
+        BUILD = 'false'
         TEST = 'false'
         DELIVER = 'false'
+        CREATE = 'true'
         PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
-        HOME = '.'
+        //HOME = '.'
     }
     stages {
+        stage('Run container'){
+            when {environment name: 'CREATE', value: 'true'} 
+            agent any
+            steps {
+                sh 'whoami'
+                sh 'docker build -t getting-started-jenkins .'
+                sh 'docker run -dp 3000:3000 getting-started-jenkins'
+            }
+        }
         stage('Build'){
             when {environment name: 'BUILD', value: 'true'}  
             agent { dockerfile true }
