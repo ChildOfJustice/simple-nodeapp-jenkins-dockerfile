@@ -1,5 +1,5 @@
 FROM node:latest
-USER jenkins
+# USER jenkins
 RUN apt update
 RUN apt-get -y install sudo
 WORKDIR /app
