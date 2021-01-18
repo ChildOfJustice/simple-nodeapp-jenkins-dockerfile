@@ -1,7 +1,7 @@
 pipeline {
     
     //customWorkspace 'C:\\w\\$JOB_NAME'
-    agent { dockerfile true }
+    agent none
     environment { 
 
         BUILD = 'true'
@@ -13,14 +13,17 @@ pipeline {
     stages {
         stage('Build'){
             when {environment name: 'BUILD', value: 'true'}  
-            //agent { dockerfile true }
+            agent { dockerfile true }
             steps {
                 sh 'yarn install --production'
+                sh 'whoami'
             }
         }
         stage('Deliver'){
             when {environment name: 'DELIVER', value: 'true'}  
-
+            agent {
+                docker { image 'node:14-alpine' }
+            }
             steps {
                 // sh script:'''
                 //     sudo rm -rf /var/www/html/
@@ -35,10 +38,11 @@ pipeline {
                 // '''
                 sh 'node --version'
                 sh 'pwd'
-                sh 'node src/index.js'
-                // sh script:'''
-                //     node src/index.js
-                // '''
+                sh 'whoami'
+                //sh 'node src/index.js'
+                sh script:'''
+                    node src/index.js
+                '''
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh 'echo "Terminating..."'
                 //sh 'sudo service httpd stop'
