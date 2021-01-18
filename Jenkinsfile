@@ -1,6 +1,6 @@
 pipeline {
     
-    agent { label 'TestNode' }
+    agent { label 'spot-instances' }
     //agent none
     //agent { dockerfile true }
     environment { 
