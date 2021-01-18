@@ -8,7 +8,7 @@ pipeline {
         TEST = 'false'
         DELIVER = 'false'
         PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
-
+        HOME = '.'
     }
     stages {
         stage('Build'){
