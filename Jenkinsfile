@@ -1,6 +1,7 @@
 pipeline {
     
-    agent none
+    agent { label 'TestNode' }
+    //agent none
     //agent { dockerfile true }
     environment { 
 
