@@ -19,6 +19,8 @@ pipeline {
                 sh 'whoami'
                 sh 'docker build -t getting-started-jenkins .'
                 sh 'docker run -dp 3000:3000 getting-started-jenkins'
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh 'echo "Terminating..."'
             }
         }
         stage('Build'){
