@@ -7,13 +7,12 @@ pipeline {
         BUILD = 'true'
         TEST = 'false'
         DELIVER = 'true'
-        JENKINS_HOME = '/home/sardor/Documents/LEARNING/JenkinsSpotEC2/JenkinsWorkspace'
         PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
 
     }
     stages {
         stage('Build'){
-            when {environment name: 'DELIVER', value: 'true'}  
+            when {environment name: 'BUILD', value: 'true'}  
             //agent { dockerfile true }
             steps {
                 sh 'yarn install --production'
@@ -36,9 +35,10 @@ pipeline {
                 // '''
                 sh 'node --version'
                 sh 'pwd'
-                sh script:'''
-                    node src/index.js
-                '''
+                sh 'node src/index.js'
+                // sh script:'''
+                //     node src/index.js
+                // '''
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh 'echo "Terminating..."'
                 //sh 'sudo service httpd stop'
@@ -48,4 +48,3 @@ pipeline {
     }
 
 }
-        
