@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('Run container'){
             when {environment name: 'CREATE', value: 'true'} 
-            agent any
+            //agent any
             steps {
                 sh 'whoami'
                 sh 'docker build -t getting-started-jenkins .'
