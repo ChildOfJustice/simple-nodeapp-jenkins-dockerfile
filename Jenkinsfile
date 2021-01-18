@@ -8,6 +8,8 @@ pipeline {
         TEST = 'false'
         DELIVER = 'true'
         PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
+        
+        HOME = '.'
 
     }
     stages {
