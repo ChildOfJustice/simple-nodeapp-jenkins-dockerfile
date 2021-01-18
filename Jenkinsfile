@@ -21,6 +21,7 @@ pipeline {
                 sh 'docker run -dp 3000:3000 getting-started-jenkins'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)' 
                 sh 'echo "Terminating..."'
+                sh 'docker rm -f $(docker ps -a -q --filter ancestor="getting-started-jenkins")'
             }
         }
         stage('Build'){
