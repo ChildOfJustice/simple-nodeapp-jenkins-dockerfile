@@ -1,29 +1,30 @@
 pipeline {
     
-    //agent none
-    agent { dockerfile true }
+    agent none
+    //agent { dockerfile true }
     environment { 
 
         BUILD = 'true'
         TEST = 'false'
-        DELIVER = 'true'
+        DELIVER = 'false'
         PROJECT_FOLDER_NAME = 'TestProjSpotEC2'
 
     }
     stages {
         stage('Build'){
             when {environment name: 'BUILD', value: 'true'}  
-            //agent { dockerfile true }
+            agent { dockerfile true }
             steps {
                 sh 'yarn install --production'
                 sh 'whoami'
+                sh 'node src/index.js'
             }
         }
         stage('Deliver'){
             when {environment name: 'DELIVER', value: 'true'}  
-            //agent {
-            //    docker { image 'node:14-alpine' }
-            //}
+            agent {
+                docker { image 'node:12-alpine' }
+            }
             steps {
                 // sh script:'''
                 //     sudo rm -rf /var/www/html/
